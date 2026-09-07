@@ -5,6 +5,7 @@ ruteOrder = Path.home() / "AskepiosVault"
 ruteImages = Path.home() / "AskepiosVault/Images"
 ruteDocs = Path.home() / "AskepiosVault/Docs"
 ruteMusic = Path.home() / "AskepiosVault/Music"
+ruteOther = Path.home() / "AskepiosVault/Other"
 
 print("FILES FOUNDED:")
 print("______________________________")
@@ -15,7 +16,7 @@ for i in ruteOrder.iterdir():
         print(f"Directory: {i.name} ")
 
 for j in ruteOrder.iterdir():
-    if j.suffix.lower() == ".jpg" or j.suffix.lower() == ".png":
+    if j.suffix.lower() == ".jpg" or j.suffix.lower() == ".png" or j.suffix.lower() == ".jpeg":
         shutil.move(j, ruteImages)
     elif j.suffix.lower() == ".pdf" or j.suffix.lower() == ".docx":
         shutil.move(j, ruteDocs)
@@ -23,6 +24,6 @@ for j in ruteOrder.iterdir():
         shutil.move(j, ruteMusic)
     else:
         pass
-
+        
 print("______________________________")
 print("Files moved succesfully...")
