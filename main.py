@@ -19,6 +19,7 @@ ruteOther = Path.home() / "AskepiosVault/Other"
 ruteCompressed = Path.home() / "AskepiosVault/Compressed"
 ruteVideos = Path.home() / "AskepiosVault/Videos"
 ruteExe = Path.home() / "AskepiosVault/Exes"
+ruteCodes = Path.home() / "AskepiosVault/Codes"
 
 def showFiles():
     print("FILES FOUNDED:")
@@ -44,6 +45,8 @@ def order():
             shutil.move(j, ruteVideos)
         elif extencion in extenciones["exes"]:
             shutil.move(j, ruteExe)
+        elif extencion in extenciones["code"]:
+            shutil.move(j, ruteCodes)
         else:
             pass
 
