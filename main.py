@@ -12,14 +12,21 @@ extenciones = {
 }
 
 ruteOrder = Path.home() / "AskepiosVault"
-ruteImages = Path.home() / "AskepiosVault/Images"
-ruteDocs = Path.home() / "AskepiosVault/Docs"
-ruteMusic = Path.home() / "AskepiosVault/Music"
-ruteOther = Path.home() / "AskepiosVault/Other"
-ruteCompressed = Path.home() / "AskepiosVault/Compressed"
-ruteVideos = Path.home() / "AskepiosVault/Videos"
-ruteExe = Path.home() / "AskepiosVault/Exes"
-ruteCodes = Path.home() / "AskepiosVault/Codes"
+
+rutes = {
+    "img": ruteOrder / "Images",
+    "doc": ruteOrder / "Docs",
+    "audio": ruteOrder / "Music",
+    "compressed": ruteOrder / "Compressed",
+    "video": ruteOrder / "Videos",
+    "exes": ruteOrder / "Exes",
+    "code": ruteOrder / "Codes",
+    "other": ruteOrder / "Other"
+}
+
+def makeDirs():
+    for rute in rutes.values():
+       rute.mkdir(parents=True, exist_ok=True)
 
 def showFiles():
     print("FILES FOUNDED:")
@@ -32,38 +39,38 @@ def showFiles():
 
 def order():
     for j in ruteOrder.iterdir():
-        extencion = j.suffix.lower()
-        if extencion in extenciones["img"]:
-            shutil.move(j, ruteImages)
-        elif extencion in extenciones["doc"]:
-            shutil.move(j, ruteDocs)
-        elif extencion in extenciones["audio"]:
-            shutil.move(j, ruteMusic)
-        elif extencion in extenciones["compressed"]:
-            shutil.move(j, ruteCompressed)
-        elif extencion in extenciones["video"]: 
-            shutil.move(j, ruteVideos)
-        elif extencion in extenciones["exes"]:
-            shutil.move(j, ruteExe)
-        elif extencion in extenciones["code"]:
-            shutil.move(j, ruteCodes)
-        else:
-            pass
+        if j.is_file():
+            extencion = j.suffix.lower()
+            moved = False
+            
+            for category, lista_ext in extenciones.items():
+                if extencion in lista_ext:
+                    shutil.move(str(j), str(rutes[category]))
+                    moved = True
+                    break
+
+            if not moved:
+                shutil.move(str(j), str(rutes["other"]))
 
 while True:
     print("1. show files\n2. order files\n3. exit")
-    option = int(input("Que desea hacer: "))
+    try:
+        option = int(input("What you wanna do: "))
+    except ValueError:
+        print("Please enter a number")
+        continue
 
     if option == 1:
         showFiles()
     elif option == 2:
+        makeDirs()
         order()
         print("Files order sucesfully")
     elif option == 3:
+        print("Bye Askepios...")
         break
     else:
-        print("Error")
-
+        print("Invalid option")
 
 
 
